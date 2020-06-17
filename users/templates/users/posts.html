@@ -1,0 +1,13 @@
+{% for blog in post_list %}
+    <div class="card col-md-5 col-lg-4 m-1 p-1">
+        <img src="{{ blog.image.url }}" class="card-img-top img img-thumbnail img-responsive">
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title">{{ blog.title }}</h5>
+            <p class="card-text">{{ blog.description|safe }}</p>
+            <small>{{ blog.user.username }}, {{ blog.created }}</small>
+            <br>
+            <a href="{{ blog.get_absolute_url }}" class="btn btn-primary mt-auto"
+               style="background-color: #86c441; border-color: #86c441">See full text</a>
+        </div>
+    </div>
+{% endfor %}

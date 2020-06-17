@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+<div class="list-group">
+
+    <form method="get" action="{% url 'news:post_filter' %}" name="post_filter"
+          enctype="multipart/form-data">
+
+        <h3>Select Category</h3>
+        <div class="custom-control custom-checkbox list-group ml-3">
+            {% for category in categories %}
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox" value="{{ category.id }}" id="check{{ forloop.counter }}"
+                           name="category" class="custom-control-input">
+                    <span class="custom-control-label"
+                          for=check{{ forloop.counter }}">{{ category.title }}</span>
+                </label>
+            {% endfor %}
+        </div>
+
+        <h3>Select Tag</h3>
+        <div class="custom-control custom-checkbox list-group ml-3">
+            {% for tag in tags %}
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox" value="{{ tag.tag }}" id="check{{ forloop.counter }}"
+                           name="tag" class="custom-control-input">
+                    <span class="custom-control-label"
+                          for=check{{ forloop.counter }}">{{ tag.tag }}</span>
+                </label>
+            {% endfor %}
+        </div>
+        <button class="btn btn-group-lg btn-primary" type="submit">Find</button>
+    </form>
+</div>
