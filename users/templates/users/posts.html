@@ -1,13 +1,23 @@
-{% for blog in post_list %}
+{% for blog in page_obj %}
     <div class="card col-md-5 col-lg-4 m-1 p-1">
+        {% if blog.image %}
         <img src="{{ blog.image.url }}" class="card-img-top img img-thumbnail img-responsive">
+        {% endif %}
         <div class="card-body d-flex flex-column">
             <h5 class="card-title">{{ blog.title }}</h5>
-            <p class="card-text">{{ blog.description|safe }}</p>
-            <small>{{ blog.user.username }}, {{ blog.created }}</small>
+            <small>{% if blog.user.firstname and blog.user.lastname %}
+                {{ blog.user.firstname }} {{ blog.user.lastname }}{% else %}{{ blog.user.username }}{% endif %}
+                , {{ blog.created }}
+            </small>
             <br>
-            <a href="{{ blog.get_absolute_url }}" class="btn btn-primary mt-auto"
-               style="background-color: #86c441; border-color: #86c441">See full text</a>
+
+            <a href="{{ blog.get_absolute_url }}" class="btn btn-primary mt-auto inline"
+                   style="background-color: #86c441; border-color: #86c441">See full text</a>
+                <a href="{% url 'news:update_post' blog.slug %}" class="btn btn-primary mt-1 inline"
+                   style="background-color: #86c441; border-color: #86c441">Edit post</a>
+                <a href="{% url 'news:delete_post' blog.slug %}" class="btn btn-primary mt-1 inline"
+                   style="background-color: #86c441; border-color: #86c441">Delete post</a>
+
         </div>
     </div>
 {% endfor %}

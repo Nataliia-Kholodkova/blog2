@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container col-sm-10 offset-md-2">
+        <div class="row m-2">
+            {% if post_list %}
+                {% include 'news/posts.html' %}
+                </div>
+                {% include 'pagination.html' %}
+            {% else %}
+                <p>Sorry, but there is no articles </p>
+                </div>
+            {% endif %}
+
+
+
+    </div>
+
+{% endblock %}

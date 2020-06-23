@@ -18,10 +18,21 @@ from django.urls import path
 
 from . import views
 
-app_name='news'
+app_name = 'news'
 
 urlpatterns = [
-    path('', views.NewsList.as_view(), name='news'),
-    path('<slug>', views.NewsDetail.as_view(), name='news_detail')
+    path('', views.ArticlesList.as_view(), name='home'),
+    path('posts/', views.PostList.as_view(), name='posts'),
+    path('posts/filter', views.PostFilterView.as_view(), name='post_filter'),
+    path('search', views.Search.as_view(), name='search'),
+    path('create', views.AddPost.as_view(), name='create_post'),
+    path('<slug>', views.PostDetail.as_view(), name='post_detail'),
+    path('<slug>/comment/add', views.AddComment.as_view(), name='add_comment'),
+    path('<slug>/comment/<int:parent>/', views.AddComment.as_view(), name='add_comment'),
+    path('<slug>/update', views.EditPost.as_view(), name='update_post'),
+    path('<slug>/delete', views.DeletePost.as_view(), name='delete_post'),
+    path('<slug>/comment/<int:pk>/delete/', views.DeleteComment.as_view(), name='delete_comment'),
+    path('<slug>/comment/<int:pk>/update/', views.EditComment.as_view(), name='edit_comment'),
+    path('search', views.Search.as_view(), name='search'),
 ]
 

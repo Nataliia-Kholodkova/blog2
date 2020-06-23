@@ -1,10 +1,97 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div id="carouselFade" class="carousel slide carousel-fade col-sm-12 col-md-8 offset-md-2" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselIndicators" data-slide-to="2"></li>
+            <li data-target="#carouselIndicators" data-slide-to="3"></li>
+            <li data-target="#carouselIndicators" data-slide-to="4"></li>
+        </ol>
+        <div class="carousel-inner">
+
+            <div class="carousel-item active">
+                {#                   <a href="{% url 'news:post_detail' post.slug %}">#}
+                <img src="{% static '/img/beauty.jpg' %}" class="d-block w-100">
+                {#                   </a>#}
+                <div class="carousel-caption d-none d-md-block">
+                    <h5 style="color: darkslategrey;  text-shadow: -1px 0 white, 0 -1px white;">All about Beauty</h5>
+
+                </div>
+            </div>
+            <div class="carousel-item">
+                {#                   <a href="{% url 'news:post_detail' post.slug %}">#}
+                <img src="{% static '/img/healthy_food.jpg' %}" class="d-block w-100">
+                {#                   </a>#}
+                <div class="carousel-caption d-none d-md-block">
+                    <h5 style="color: darkslategrey;  text-shadow: -1px 0 white, 0 -1px white; ">All about Healthy Nutrition</h5>
+
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                {#                   <a href="{% url 'news:post_detail' post.slug %}">#}
+                <img src="{% static '/img/healty_habbits.jpg' %}" class="d-block w-100">
+                {#                   </a>#}
+                <div class="carousel-caption d-none d-md-block">
+                    <h5 style="color: darkslategrey;  text-shadow: -1px 0 white, 0 -1px white;">All about Healthy Habbits</h5>
+
+                </div>
+            </div>
+            <div class="carousel-item">
+                {#                   <a href="{% url 'news:post_detail' post.slug %}">#}
+                <img src="{% static '/img/sport.jpg' %}" class="d-block w-100">
+                {#                   </a>#}
+                <div class="carousel-caption d-none d-md-block">
+                    <h5 style="color: darkslategrey;  text-shadow: -1px 0 white, 0 -1px white;">All about Sport</h5>
+
+                </div>
+            </div>
+            <div class="carousel-item">
+                {#                   <a href="{% url 'news:post_detail' post.slug %}">#}
+                <img src="{% static '/img/yoga.jpg' %}" class="d-block w-100">
+                {#                   </a>#}
+                <div class="carousel-caption d-none d-md-block">
+                    <h5 style="color: darkslategrey;  text-shadow: -1px 0 white, 0 -1px white;">All about Yoga</h5>
+
+                </div>
+            </div>
+
+
+        </div>
+        <a class="carousel-control-prev" href="#carouselFade" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselFade" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    <div class="container col-sm-10 offset-md-2">
+        <div class="row m-2">
+            {% for blog in post_list %}
+                <div class="card col-md-4 col-lg-3 m-1 p-1">
+                    {% if blog.image %}
+                        <img src="{{ blog.image.url }}" class="card-img-top img img-thumbnail img-responsive">
+
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ blog.title }}</h5>
+                        <small>{% if blog.user.firstname and blog.user.lastname %}
+                {{ blog.user.firstname }} {{ blog.user.lastname }}{% else %}{{ blog.user.username }}{% endif %}
+                , {{ blog.created }}</small>
+                        <br>
+                        <a href="{{ blog.get_absolute_url }}" class="btn btn-primary mt-auto"
+                           style="background-color: #86c441; border-color: #86c441">See full text</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}

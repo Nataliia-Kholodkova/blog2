@@ -5,16 +5,16 @@
 {% block head_title %}{% trans "Sign Out" %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Delete Profile" %}</h1>
+    <h1>{% trans "Delete Post" %}</h1>
 
-    <p>{% trans 'Are you sure you want to delete your profile?' %}</p>
+    <p>{% trans 'Are you sure you want to delete this post?' %}</p>
 
-    <form method="post" action="{% url 'account_logout' %}">
+    <form method="post" action="{% url 'news:delete_post' post.slug %}">
         {% csrf_token %}
         {% if redirect_field_value %}
             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
         {% endif %}
-        <button class="btn btn-primary" type="submit" style="background-color: #1e7e34">Delete
+        <button class="btn btn-primary" type="submit" style="background-color: #86c441; border-color: #86c441">Delete
         </button>
 
     </form>

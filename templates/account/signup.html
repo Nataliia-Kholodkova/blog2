@@ -1,21 +1,68 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
+    <br>
+    <br>
     <div class="row m-3">
-        <form class="form form-signin col-md-4 offset-2" action="post">
+        <form class="form form-signin col-md-4 offset-2" id="signup_form" method="post"
+              action="{% url 'account_signup' %}">
             {% csrf_token %}
-            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+            <h1 class="h3 mb-3 font-weight-normal">Let's create your account</h1>
             <label for="inputEmail" class="sr-only">Email address</label>
+
             {{ form.email }}
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
             <label for="inputUsername" class="sr-only">Username</label>
+
             {{ form.username }}
-            <label for="inputPassword2" class="sr-only">Password</label>
+            {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <label for="inputPassword1" class="sr-only">Password</label>
             {{ form.password1 }}
-            <label for="inputPassword2" class="sr-only">Confirm password</label>
+            {% if form.email.password1 %}
+                {% for error in form.password1.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <label for="inputPassword2" class="sr-only">Password</label>
             {{ form.password2 }}
+            {% if form.email.password2 %}
+                {% for error in form.password2.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% if form.redirect_field_value %}
+                <input type="hidden" name="{{ form.redirect_field_name }}" value="{{ form.redirect_field_value }}"/>
+            {% endif %}
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit" style="background-color: #1e7e34">Sign in</button>
-
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+            <button class="btn btn-lg btn-primary btn-block" type="submit"
+                    style="background-color: #86c441; border-color: #86c441">Sign in
+            </button>
         </form>
     </div>
+    <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">log in</a>.{% endblocktrans %}
+    </p>
+
 {% endblock %}

@@ -17,11 +17,22 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
 urlpatterns = [
+
     path('admin/', admin.site.urls),
-    path('', include('news.urls'))
-]
+    path('summernote/', include('django_summernote.urls')),
+    path('accounts/', include('allauth.urls')),
+    path('profile/', include('users.urls')),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/v1/api/token-auth/', obtain_jwt_token),
+    path('api/v1/api/token-auth-refresh/', refresh_jwt_token),
+    path('api/v1/', include('api.urls')),
+    path('', include('news.urls')),
+
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

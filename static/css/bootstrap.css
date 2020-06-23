@@ -4346,8 +4346,8 @@ input[type="button"].btn-block {
 
 .navbar-brand {
   display: inline-block;
-  padding-top: 0.3125rem;
-  padding-bottom: 0.3125rem;
+  /*padding-top: 0.3125rem;*/
+  /*padding-bottom: 0.3125rem;*/
   margin-right: 1rem;
   font-size: 1.25rem;
   line-height: inherit;
@@ -5038,8 +5038,8 @@ input[type="button"].btn-block {
 .page-item.active .page-link {
   z-index: 3;
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #86c441;
+  border-color: #86c441;
 }
 
 .page-item.disabled .page-link {

@@ -1,10 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container col-sm-10 offset-md-2">
+    <div class="row col-md-10 m-2 p-2">
+        <div class="card mb-3 col-md-8">
+            <div class="row col-md-12 no-gutters">
+                <div class="col-md-3">
+                    {% if user.image %}
+                    <img src="{{ user.image.url }}" class="card-img" alt="...">
+                    {% else %}
+                    <img src="{% static '/img/user_empty_photo.jpg' %}" class="card-img" alt="...">
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">
+                            {% if user.firstname and user.lastname %}{{ user.firstname }} {{ user.lastname }}{% else %}
+                                {{ user.username }} {% endif %}</h5>
+
+                        <div class="card-text">
+                            {% if user.firstname %}
+                                <p>{{ user.username }}</p>
+                            {% endif %}
+                            {% if user.description %}
+                                <p>{{ user.description }}</p>
+                            {% endif %}
+                            <ul class="nav nav-pills">
+                                <li class="nav-item">
+                                    <a class="nav-link ml-0 pl-0" href="{% url 'user:profile_update' user.pk %}"
+                                       style="color: #1e7e34">Edit profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'news:create_post' %}" style="color: #1e7e34">Add new post</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'user:profile_delete' user.pk %}" style="color: #1e7e34">Delete Profile</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row col-md-10 m-2 p-2">
+
+        {% include 'users/posts.html' %}
+
+    </div>
+
+    <div class="row col-md-10 m-2 p-2">
+        {% if page_obj %}
+        {% include 'pagination.html' %}
+            {% else %}
+            <h6>You have no articles or blogs yet...</h6>
+        {% endif %}
+    </div>
+
+
+</div>
+{% endblock %}

@@ -18,21 +18,22 @@ from django.urls import path
 
 from . import views
 
-app_name = 'news'
+app_name = 'api'
 
 urlpatterns = [
-    path('', views.ArticlesList.as_view(), name='home'),
-    path('posts/', views.PostList.as_view(), name='posts'),
-    path('posts/filter', views.PostFilterView.as_view(), name='post_filter'),
-    path('search', views.Search.as_view(), name='search'),
-    path('create', views.AddPost.as_view(), name='create_post'),
-    path('<slug>', views.PostDetail.as_view(), name='post_detail'),
-    path('<slug>/comment/add', views.AddComment.as_view(), name='add_comment'),
-    path('<slug>/comment/<int:parent>/', views.AddComment.as_view(), name='add_comment'),
-    path('<slug>/update', views.EditPost.as_view(), name='update_post'),
-    path('<slug>/delete', views.DeletePost.as_view(), name='delete_post'),
-    path('<slug>/comment/<int:pk>/delete/', views.DeleteComment.as_view(), name='delete_comment'),
-    path('<slug>/comment/<int:pk>/update/', views.EditComment.as_view(), name='edit_comment'),
-    path('search', views.Search.as_view(), name='search'),
+    path('users/register', views.UserCreateView.as_view(), name='create_user'),
+    path('users/login', views.UserLoginView.as_view(), name='login_user'),
+    path('posts/', views.PostListView.as_view(), name='posts'),
+    path('posts/create', views.PostCreateView.as_view(), name='create_post'),
+    path('posts/<pk>', views.PostDetailView.as_view(), name='post_detail'),
+    path('posts/<pk>/comments', views.CommentPostView.as_view(), name='post_comments'),
+    path('comment/add', views.CommentCreateView.as_view(), name='add_comment'),
+    path('comment/<pk>', views.CommentDetailView.as_view(), name='comment_detail'),
+    path('comment/delete/<pk>', views.CommentDeletelView.as_view(), name='delete_comment'),
+    path('comment/update/<int:pk>', views.CommentUpdateView.as_view(), name='edit_comment'),
+    path('posts/update/<pk>', views.PostUpdateView.as_view(), name='update_post'),
+    path('posts/delete/<pk>', views.PostDeletelView.as_view(), name='delete_post'),
+
+    # path('search', views.Search.as_view(), name='search'),
 ]
 

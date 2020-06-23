@@ -1,10 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container col-sm-10 offset-md-2">
+        <form method="post" enctype="multipart/form-data" class="form m-4">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.field.widget.attrs.id != 'TagsId' and field.field.widget.attrs.id != 'CategoryId' %}
+
+                    {% if field.field.widget.attrs.id == 'FileId' %}
+                        <div class="form-group imageUpload col-md-10 col-lg-2">
+                            <label for="{{ field.id_for_label }}" class="imageUpload">
+                                <img src="{{ post.image.url }}" class="img img-responsive img-circle col-sm-12">
+                                {{ field }}
+                                {% if field.errors %}
+                                    <span>{{ field.errors|striptags }}</span>
+                                {% endif %}
+                            </label>
+
+                        </div>
+
+                    {% else %}
+                        <div class="form-group ">
+                            <label for="{{ field.id_for_label }}" class="col-sm-3">{{ field.label_tag }}</label>
+                            <div class="col-md-10 col-lg-6 ">
+                                {{ field|safe }}
+                                {% if field.errors %}
+                                    <span>{{ field.errors|striptags }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            <div class="form-group">
+                <label for="CategoryId" class="col-sm-3">Select category</label>
+                <div class="col-md-10 col-lg-6">
+                    <select class="form-control" id="CategoryId" name="category">
+                        {% for x,y in form.fields.category.choices %}
+
+                            <option value="{{ x }}"{% if form.fields.category.value == post.category.title|lower %}
+                                    selected{% endif %}>{{ y }}</option>
+                        {% endfor %}
+
+                    </select>
+                {% if form.category.errors %}
+            <span>{{ form.category.errors|striptags }}</span>
+        {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="TagsId" class="col-sm-3">Select tags</label>
+                <div class="col-md-10 col-lg-6">
+                    <select multiple class="form-control" id="TagsId" name="tags" style="height: 200px">
+                        {% for x,y in form.fields.tags.choices %}
+
+                            <option value="{{ x }}"{% for k, v in post.tags.all.values_list%}{% if x == v %}
+                                    selected{% endif %}{% endfor %}>{{ y }}</option>
+                        {% endfor %}
+                    </select>
+                {% if form.tags.errors %}
+            <span>{{ form.tags.errors|striptags }}</span>
+        {% endif %}
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-6">
+                <button class="btn btn-lg btn-primary" type="submit" style="background-color: #86c441; border-color: #86c441">
+                    Update
+                </button>
+                <a class="btn btn-lg btn-primary" style="background-color: #86c441; border-color: #86c441" href="{% url 'user:profile' request.user.id %}">
+                    Not change
+                </a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

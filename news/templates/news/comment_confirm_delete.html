@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Sign Out" %}{% endblock %}
+
+{% block content %}
+    <br>
+    <h1>{% trans "Delete Post" %}</h1>
+
+    <p>{% trans 'Are you sure you want to delete this post?' %}</p>
+
+    <form method="post" action="{% url 'news:delete_comment' comment.post.slug comment.pk %}">
+        {% csrf_token %}
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+        <button class="btn btn-primary" type="submit" style="background-color: #86c441; border-color: #86c441">Delete
+        </button>
+
+    </form>
+
+
+{% endblock %}

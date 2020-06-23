@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container col-sm-10 offset-md-2">
+        <div class="row col-md-8 m-2 p-2">
+            <div class="card m-2 p-2">
+                <img src="{{ post.image.url }}" class="img card-img-top img-thumbnail">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <div class="card-text">{{ post.text|safe }}</div>
+                    <div class="card-footer">
+                        <small>Author: {% if post.user.firstname and post.user.lastname %}
+                            {{ post.user.firstname }} {{ post.user.lastname }}{% else %}
+                            {{ post.user.username }}{% endif %}</small>
+                        <br>
+                        <small class="text-muted">{% for tag in post.tags.all %}
+                            <small>{{ tag }}</small>
+                        {% endfor %}</small>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% include 'news/comments.html' %}
+        {% if post.comments.all %}
+            {% include 'pagination.html' %}
+        {% endif %}
+
+    </div>
+
+{% endblock %}
